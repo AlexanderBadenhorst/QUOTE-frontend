@@ -9,7 +9,7 @@ function App() {
 	async function loginUser(event) {
 		event.preventDefault()
 
-		const response = await fetch('https://quote-app-c95l.onrender.com/api/login', {
+		const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

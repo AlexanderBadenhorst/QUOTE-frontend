@@ -12,7 +12,7 @@ function App() {
 	async function registerUser(event) {
 		event.preventDefault()
 
-		const response = await fetch('https://quote-app-c95l.onrender.com/api/register', {
+		const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

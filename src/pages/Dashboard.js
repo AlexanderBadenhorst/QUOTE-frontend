@@ -9,7 +9,7 @@ const Dashboard = () => {
 	const [tempQuote, setTempQuote] = useState('')
 
 	async function populateQuote() {
-		const req = await fetch('https://quote-app-c95l.onrender.com/api/quote', {
+		const req = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/quote`, {
 			headers: {
 				'x-access-token': localStorage.getItem('token'),
 			},
@@ -39,7 +39,7 @@ const Dashboard = () => {
 	async function updateQuote(event) {
 		event.preventDefault()
 
-		const req = await fetch('https://quote-app-c95l.onrender.com/api/quote', {
+		const req = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/quote`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const Dashboard = () => {
 	async function clearQuote(event) {
 		event.preventDefault()
 
-		const req = await fetch('https://quote-app-c95l.onrender.com/api/quote', {
+		const req = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/quote`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',

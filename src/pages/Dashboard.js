@@ -7,9 +7,10 @@ const Dashboard = () => {
 	const history = useHistory()
 	const [quote, setQuote] = useState('')
 	const [tempQuote, setTempQuote] = useState('')
+	const [isEditing, setIsEditing] = useState(false)
 
 	async function populateQuote() {
-		const req = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/quote`, {
+		const req = await fetch('http://localhost:1337/api/quote', {
 			headers: {
 				'x-access-token': localStorage.getItem('token'),
 			},
@@ -39,7 +40,7 @@ const Dashboard = () => {
 	async function updateQuote(event) {
 		event.preventDefault()
 
-		const req = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/quote`, {
+		const req = await fetch('http://localhost:1337/api/quote', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -54,6 +55,7 @@ const Dashboard = () => {
 		if (data.status === 'ok') {
 			setQuote(tempQuote)
 			setTempQuote('')
+			setIsEditing(false)
 		} else {
 			alert(data.error)
 		}
@@ -62,7 +64,7 @@ const Dashboard = () => {
 	async function clearQuote(event) {
 		event.preventDefault()
 
-		const req = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/quote`, {
+		const req = await fetch('http://localhost:1337/api/quote', {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
@@ -83,6 +85,11 @@ const Dashboard = () => {
 		history.push('/')
 	}
 
+	function editQuote() {
+		setTempQuote(quote)
+		setIsEditing(true)
+	}
+
 	return (
 		<div className="container">
 			<h1>Your quote: {quote || 'No quote found'}</h1>
@@ -93,8 +100,10 @@ const Dashboard = () => {
 					value={tempQuote}
 					onChange={(e) => setTempQuote(e.target.value)}
 				/>
-				<input type="submit" value="Update quote" />
+				<input type="submit" value="Post Quote" />
+				{isEditing && <input type="submit" value="Update Quote" />}
 			</form>
+			<button onClick={editQuote}>Edit quote</button>
 			<button onClick={clearQuote}>Clear quote</button>
 			<button onClick={logout} className="link-button">Logout</button>
 		</div>
